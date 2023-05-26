@@ -1,19 +1,19 @@
 
-ROM used:   1187/4096 (29%)
-            1187/4096 (29%) including unused fragments
+ROM used:   1194/4096 (29%)
+            1194/4096 (29%) including unused fragments
 
             0.3 Average locations per line
             1.5 Average locations per statement
 
-RAM used:   59/191 (31%) at main() level
-            69/191 (36%) worst case
+RAM used:   67/191 (35%) at main() level
+            77/191 (40%) worst case
 
-Stack used: 3 worst case (3 in main + 0 for interrupts)
+Stack used: 4 worst case (3 in main + 1 for interrupts)
 Stack size: 8
 
 Lines Stmts  %   Files
 ----- ----- ---  -----
-  852   415  54  src\CODIGO COMPLETO 1.10.c
+  865   421  54  src\CODIGO COMPLETO 1.10.c
   671     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16F874A.h
    34     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdbool.h
  1351   359  46  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdlib.h
@@ -23,14 +23,13 @@ Lines Stmts  %   Files
    37     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdio.h
   163     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdint.h
 ----- -----
- 3591   774 Total
+ 3604   780 Total
 
 Page ROM  %  RAM   Vol Diff  Functions:
 ---- --- --- ---   --- ----  ----------
  Inline        13             @MULFF
 0     19   2    1             @delay_ms1
 0     14   1    1             @delay_us1
-0     57   5    1             @GET_TICKS_1
 0    278  23    1   531  3.8  Punto_0
  Inline         4   656  5.8  MovDer
 0    104   9    4   656  5.8  MovIzq
@@ -39,25 +38,27 @@ Page ROM  %  RAM   Vol Diff  Functions:
 0    231  19    4    86  2.5  ControlTemp
  Inline        10             @FLT
 0      2   0    0     3  0.0  ObtenerTemp
-0    374  32    4  2462  5.4  MAIN
+0     17   1    0    45  1.4  timer1_isr
+0    374  31    4  2559  5.9  MAIN
  Inline         0             @cinit1
 
 Program metrics:
-    Functions               8
-    Statements              774
-    Comments                1026
-    Volume (V)              7959
-    Difficulty (D)          36.0
-    Effort to implement (E) 286714
-    Time to implement (T)   4 hours, 25 minutes
-    Est Delivered Bugs (B)  1
+    Functions               9
+    Statements              780
+    Comments                1036
+    Volume (V)              8212
+    Difficulty (D)          38.4
+    Effort to implement (E) 315033
+    Time to implement (T)   4 hours, 52 minutes
+    Est Delivered Bugs (B)  2
     Cyclomatic Complexity   22
-    Maintainability (MI)    12
+    Maintainability (MI)    23
 
  Segment     Used  Free
 -----------  ----  ----
 00000-00003     4  0  
-00004-007FF  1183  861  
+00004-00032    47  0  
+00033-007FF  1143  854  
 00800-00FFF     0  2048  
 
 

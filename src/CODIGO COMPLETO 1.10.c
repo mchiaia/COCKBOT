@@ -1,7 +1,8 @@
 /*
- ES MUY POSIBLE QUE HAYA QUE ELEVAR LOS TAMAÑOS DE VARIABLES, AL USAR CON SIGNO QUEDA MAX 64K
+ ES MUY POSIBLE QUE HAYA QUE ELEVAR LOS TAMAÑOS DE VARIABLES, AL USAR sin SIGNO QUEDA MAX 64K
  TODAS LAS ENTRADAS DEBEN ESTAR EN EL PORTB POR EL PULLUP
  EVALUAR CAMBIO DELAYS FUNCIONES POR TIEMPOS EN TMR2
+ CORREGIR DESBORDAMIENTO EN TMR0 (TICKS) QUE NO SUPERE LOS 30D (PQ 30D? PQ ME GUSTO =D)
 
  LOGICA DE FUNCIONAMIENTO: RECIBO BOTELLA -> VOY A BOTELLA -> SUBO RAPIDO -> SUBO LENTO -> DOSIFICA
     -> VERIFICA DOSIFICACION -> BAJA RAPIDO -> INFORMO OK ->  ESPERO SIGUIENTE COMANDO
@@ -48,7 +49,7 @@
 #use standard_io(e)
 #endif
 
-#USE TIMER(TIMER=1, TICK=1ms, BITS=32, NOISR) // da 816uS ahustar a 1mS
+//#USE TIMER(TIMER=1, TICK=1ms, BITS=32, NOISR) // da 816uS ahustar a 1mS
 
 //DEFINICIONES COMODAS
 
@@ -171,6 +172,7 @@ float TempActual = 0; // TEMPERATURA DE LA MUESTRA
 float TempDeseada = 0;
 uint32_t TiempoActual = 0; // TIEMPO DE ANALISIS
 uint32_t TiempoPrevio = 0; // TIEMPO DE ANALISIS
+uint32_t TICKS = 0; // TICKS 1mS
 
 // VARIABLES DE COMUNICACION
 
@@ -628,6 +630,28 @@ void Mover() {
     pasosmovX = 0; //LIMPIEZA
 }
 
+void ControlTemp() {
+
+    if ((TempActual * HisteresisTemp) > TempDeseada) {
+        output_high(Refrigeracion);
+    }
+    else {
+        output_low(Refrigeracion);
+    }
+
+}
+
+void ObtenerTemp() {}
+
+
+#int_timer1
+
+void timer1_isr() {
+    TICKS++; // Incrementa la variable TICKS cada vez que ocurre una interrupción del Timer1
+    set_timer1(3036); // Carga el valor al Timer1 para que se desborde en 1ms
+    clear_interrupt(INT_TIMER1); // Limpia la bandera de interrupción del Timer1
+}
+
 void RDA_isr() {
     valorRecepcion = getc();
     if (valorRecepcion == '*') {
@@ -668,22 +692,13 @@ void RDA_isr() {
     }
 }
 
-void ControlTemp() {
-
-    if ((TempActual * HisteresisTemp) > TempDeseada) {
-        output_high(Refrigeracion);
-    }
-    else {
-        output_low(Refrigeracion);
-    }
-
-}
-
-void ObtenerTemp() {}
 
 int main() {
-    enable_interrupts(INT_RDA);
-    enable_interrupts(GLOBAL);
+    enable_interrupts(INT_RDA); // Habilita la interrupción del puerto serial
+    setup_timer_1(T1_INTERNAL | T1_DIV_BY_8); // Configura Timer1 con oscilador interno y prescaler 1:8
+    enable_interrupts(INT_TIMER1); // Habilita la interrupción del Timer1
+    set_timer1(3036); // Carga el valor al Timer1 para que se desborde en 1ms
+    enable_interrupts(GLOBAL); // Habilita las interrupciones globales
     //input_pullup(SwitchX);
     //input_pullup(SwitchZ);
     //PORT_b_PULLUPS()
@@ -760,8 +775,8 @@ if(input(PIN_B5)==0)
          delay_us(RToff);
      }
  */ // FUNCION SUBIDA???????
-    TiempoPrevio = get_ticks();
-    TiempoActual = get_ticks();
+    TiempoPrevio = TICKS;
+    TiempoActual = TICKS;
 
     while (1) {
         if (input(Derbot) == 1) {//si quiero mover el motor en un sentido (horario)
@@ -839,11 +854,11 @@ if(input(PIN_B5)==0)
             }
         }
 
-        TiempoActual = get_ticks();
+        TiempoActual = TICKS;
         if ((TiempoActual - TiempoPrevio) > TiempoTemp) {
             ObtenerTemp();
             ControlTemp();
-            TiempoPrevio = get_ticks();
+            TiempoPrevio = TICKS;
         }
 
     }
