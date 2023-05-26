@@ -1,0 +1,10 @@
+compilers:
+  - description: CCSC for PIC-12-18
+    match-sources: ".*\\.c"
+    match-compiler-exe: "(.*/)?CCSC(.exe)?"
+
+    match-language: C
+    include-dirs:
+      - ${compiler-exe-dir}/Devices
+      - ${compiler-exe-dir}/Drivers
+      - ${project-path}

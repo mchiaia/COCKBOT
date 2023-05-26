@@ -1,0 +1,64 @@
+
+ROM used:   1187/4096 (29%)
+            1187/4096 (29%) including unused fragments
+
+            0.3 Average locations per line
+            1.5 Average locations per statement
+
+RAM used:   59/191 (31%) at main() level
+            69/191 (36%) worst case
+
+Stack used: 3 worst case (3 in main + 0 for interrupts)
+Stack size: 8
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  852   415  54  src\CODIGO COMPLETO 1.10.c
+  671     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16F874A.h
+   34     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdbool.h
+ 1351   359  46  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdlib.h
+   32     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stddef.h
+  423     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\string.h
+   28     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\ctype.h
+   37     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdio.h
+  163     0   0  ..\..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\stdint.h
+----- -----
+ 3591   774 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+ Inline        13             @MULFF
+0     19   2    1             @delay_ms1
+0     14   1    1             @delay_us1
+0     57   5    1             @GET_TICKS_1
+0    278  23    1   531  3.8  Punto_0
+ Inline         4   656  5.8  MovDer
+0    104   9    4   656  5.8  MovIzq
+ Inline         4   656  5.8  MovArr
+0    104   9    4   656  5.8  MovAba
+0    231  19    4    86  2.5  ControlTemp
+ Inline        10             @FLT
+0      2   0    0     3  0.0  ObtenerTemp
+0    374  32    4  2462  5.4  MAIN
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               8
+    Statements              774
+    Comments                1026
+    Volume (V)              7959
+    Difficulty (D)          36.0
+    Effort to implement (E) 286714
+    Time to implement (T)   4 hours, 25 minutes
+    Est Delivered Bugs (B)  1
+    Cyclomatic Complexity   22
+    Maintainability (MI)    12
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-007FF  1183  861  
+00800-00FFF     0  2048  
+
+
+
